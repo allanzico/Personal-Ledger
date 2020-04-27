@@ -31,10 +31,6 @@ class Ledger
      */
     private $credit;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $balance;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="ledgers")
@@ -82,17 +78,6 @@ class Ledger
         return $this;
     }
 
-    public function getBalance(): ?float
-    {
-        return $this->balance;
-    }
-
-    public function setBalance(?float $balance): self
-    {
-        $this->balance = $balance;
-
-        return $this;
-    }
 
     public function getAccount(): ?Account
     {

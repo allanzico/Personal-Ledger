@@ -32,6 +32,7 @@ class LedgerRepository extends ServiceEntityRepository
                 (SELECT @balance := 0) AS initial 
                 CROSS JOIN
                 ledger AS  l
+          
             ";
 
         $em = $this->getEntityManager();

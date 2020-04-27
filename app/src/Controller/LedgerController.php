@@ -52,13 +52,11 @@ class LedgerController extends AbstractController
             $ledger
                 ->setDebit($data['debit'])
                 ->setCredit($data['credit'])
-                ->setBalance($data['balance'])
                 ->setTransactionDescription($data['transaction_description'])
                 ->setAccount($this->entityManager->find(Account::class, $data['account']));
             $this->entityManager->persist($ledger);
             $this->entityManager->flush();
-
-        return new JsonResponse($data);
+    return new JsonResponse($data);
     }
 
     //Get All Details
