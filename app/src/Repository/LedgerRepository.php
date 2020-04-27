@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ledger;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\DBALException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,22 +20,27 @@ class LedgerRepository extends ServiceEntityRepository
         parent::__construct($registry, Ledger::class);
     }
 
-    // /**
-    //  * @return Ledger[] Returns an array of Ledger objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return mixed[] Returns ledger details with balance
+     * @throws DBALException
+     */
+
+    public function getAll()
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "SELECT transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+                FROM 
+                (SELECT @balance := 0) AS initial 
+                CROSS JOIN
+                ledger AS  l
+            ";
+
+        $em = $this->getEntityManager();
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Ledger
