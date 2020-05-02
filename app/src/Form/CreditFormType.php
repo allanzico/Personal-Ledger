@@ -10,20 +10,20 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DebitTFormType extends AbstractType
+class CreditFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('transactionDescription')
-            ->add('debit')
-            ->add('credit', HiddenType::class, [
+            ->add('credit')
+            ->add('debit', HiddenType::class, [
                 'required' => false,
             ])
             ->add('account', EntityType::class,[
                 'class' => Account::class,
                 'choice_label' => 'account_title'
-          ])
+            ])
         ;
     }
 

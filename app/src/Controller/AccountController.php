@@ -33,12 +33,12 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/account/create", name="create_account", methods={"POST"})
+     * @Route("/account/create", name="account_create_account", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
 
-    public function createAccount(Request $request){
+    public function createAction(Request $request){
         $data = json_decode($request->getContent(), true);
         $account = new  Account();
 
