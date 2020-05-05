@@ -34,23 +34,17 @@ class LedgerController extends AbstractController
         }
 
     /**
-     * @Route("/ledger", name="ledger", methods={"GET"})
+     * @Route("/", name="ledger", methods={"GET"})
      */
     public function index()
     {
-    return $this->getAll();
-    }
-
-
-    //Get All Details
-    public function getAll() {
         $dbLedgers = $this->ledgerRepository->getAll();
-//        $response = [];
-//        foreach ($dbLedgers as $dbLedger){
-//            $response[] = $dbLedger->toArray();
-//        }
 
-        return new JsonResponse($dbLedgers);
+        return $this->render('ledger/index.html.twig',[
+            'ledgers' =>$dbLedgers,
+        ]);
+
     }
+
 
 }

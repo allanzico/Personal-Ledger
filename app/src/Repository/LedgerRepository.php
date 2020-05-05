@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Ledger;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,11 +28,12 @@ class LedgerRepository extends ServiceEntityRepository
 
     public function getAll()
     {
-        $sql = "SELECT transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+        $sql = "SELECT account.account_title, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
                 FROM 
-                (SELECT @balance := 0) AS initial 
+                (SELECT @balance := 0) AS initial, account 
                 CROSS JOIN
-                ledger AS  l
+                ledger AS  l    
+                WHERE account.id = 1  
           
             ";
 
@@ -42,16 +44,18 @@ class LedgerRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?Ledger
+    /**
+     * @return mixed[] Returns latest balance
+     * @throws NonUniqueResultException
+     */
+    public function findBalance ()
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy("l.id", "DESC")
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }
