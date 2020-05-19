@@ -1,19 +1,23 @@
 {
     "devDependencies": {
         "@babel/preset-react": "^7.9.4",
+        "autoprefixer": "^9.8.0",
         "core-js": "^3.0.0",
         "install": "^0.13.0",
         "npm": "^6.14.5",
+        "postcss-cli": "^7.1.1",
         "regenerator-runtime": "^0.13.2",
+        "tailwindcss": "^1.4.6",
         "webpack-notifier": "^1.8.0"
     },
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "dev-server": "npm run build:css && encore dev-server",
+        "dev": "npm run build:css && encore dev",
+        "watch": "npm run build:css && encore dev --watch",
+        "build": "npm run build:css && encore production --progress",
+        "build:css": "postcss assets/css/tailwind.css -o assets/css/main.css"
     },
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.8.3",
