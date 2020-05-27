@@ -1,25 +1,46 @@
-import React, {createContext, useState, useEffect} from 'react';
+import React, { createContext, useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
+import { fetchLedgerData, initialState } from '../Reducers/LedgerReducer';
 
 export const LedgerContext = createContext();
 const ledgerUrl = '/api/ledger';
 
 const LedgerContextProvider = (props) => {
-    const [ledgerData, setLedgerData]= useState([]);
 
-    //Fetch ledger Data
-    useEffect(()=> {
+    // const [loading, setLoading] = useState(true)
+    // const [error, setError] = useState('');
+    // const [ledgerData, setLedgerData] = useState([]);
+
+    const [ledgerData, dispatch] = useReducer(fetchLedgerData, initialState)
+
+    useEffect(() => {
         axios.get(ledgerUrl)
-            .then(res=>{
-                setLedgerData(res.data)
+            .then(res => {
+                dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
             })
-            .catch(error=>{
-                console.log(error)
+            .catch(error => {
+                dispatch({ type: 'FETCH_ERROR' })
             })
     }, []);
 
+
+    // useEffect(() => {
+    //     axios.get(ledgerUrl)
+    //         .then(res => {
+    //             setLoading(false)
+    //             setLedgerData(res.data)
+    //             setError('')
+    //         })
+    //         .catch(error => {
+
+    //             setLoading(false)
+    //             setLedgerData([])
+    //             setError('ooops')
+    //         })
+    // }, []);
+
     return (
-        <LedgerContext.Provider value={{ledgerData}}>
+        <LedgerContext.Provider value={{ ledgerData, dispatch }}>
             {props.children}
         </LedgerContext.Provider>
     );

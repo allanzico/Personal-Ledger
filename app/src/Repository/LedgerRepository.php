@@ -28,7 +28,7 @@ class LedgerRepository extends ServiceEntityRepository
 
     public function getAll()
     {
-        $sql = "SELECT account.account_title, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+        $sql = "SELECT  account.account_title, l.id, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
                 FROM 
                 (SELECT @balance := 0) AS initial, account 
                 CROSS JOIN
@@ -48,14 +48,12 @@ class LedgerRepository extends ServiceEntityRepository
      * @return mixed[] Returns latest balance
      * @throws NonUniqueResultException
      */
-    public function findBalance ()
+    public function findBalance()
     {
         return $this->createQueryBuilder('l')
             ->orderBy("l.id", "DESC")
             ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-
 }
