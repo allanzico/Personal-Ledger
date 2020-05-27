@@ -11,6 +11,7 @@ import LedgerContextProvider from "./contexts/LedgerContext";
 
 export const Layout = () => {
     return (
+
         <div className="font-sans bg-grey-lighter flex flex-col min-h-screen w-full">
             <BrowserRouter>
                 <ThemeContextProvider>
@@ -26,6 +27,7 @@ export const Layout = () => {
 
             </BrowserRouter>
         </div>
+
     );
 }
 
