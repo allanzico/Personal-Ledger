@@ -12,7 +12,7 @@ class ThemeContextProvider extends Component {
         },
         dark: {
             syntax: '#ddd', ui: '#18242C', bg: '#171F24',
-            button: '#f8f8f8', button_text: '#1a2639',
+            button: '#1F3645', button_text: '#ddd',
             table_header: '#1F3645', table_header_text: '#f8f8f8'
         },
     }

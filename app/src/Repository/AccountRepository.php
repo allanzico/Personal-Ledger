@@ -19,22 +19,20 @@ class AccountRepository extends ServiceEntityRepository
         parent::__construct($registry, Account::class);
     }
 
-    // /**
-    //  * @return Account[] Returns an array of Account objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Account[] Find accounts and order by latest
+      */
+
+    public function findAllByNewest()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.accountTitle IS NOT NULL')
+            ->orderBy('a.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Account

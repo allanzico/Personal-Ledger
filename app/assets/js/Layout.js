@@ -7,24 +7,26 @@ import MainLayout from "./Components/Routes/MainLayout";
 import ThemeContextProvider from "./contexts/ThemeContext";
 import ThemeToggle from "./Components/ThemeToggle";
 import LedgerContextProvider from "./contexts/LedgerContext";
+import Accounts from './Components/Routes/Accounts';
+import SideNav from './Components/SideNav';
+import AccountsContextProvider, { AccountsContext } from './contexts/AccountsContext';
+
 
 
 export const Layout = () => {
     return (
-
         <div className="font-sans bg-grey-lighter flex flex-col min-h-screen w-full">
+
             <BrowserRouter>
                 <ThemeContextProvider>
                     <LedgerContextProvider>
-                        <NavBar />
-                        <ThemeToggle />
-                        <MainLayout />
+                        <AccountsContextProvider>
+                            <NavBar />
+                            <ThemeToggle />
+                            <MainLayout />
+                        </AccountsContextProvider>
                     </LedgerContextProvider>
                 </ThemeContextProvider>
-                <Switch>
-                    <Route path="/dashboard" component={Dashboard} />
-                </Switch>
-
             </BrowserRouter>
         </div>
 

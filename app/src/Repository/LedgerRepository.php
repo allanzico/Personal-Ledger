@@ -33,7 +33,6 @@ class LedgerRepository extends ServiceEntityRepository
                 (SELECT @balance := 0) AS initial, account 
                 CROSS JOIN
                 ledger AS  l    
-                WHERE account.id = 1  
           
             ";
 
@@ -45,15 +44,34 @@ class LedgerRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return mixed[] Returns latest balance
-     * @throws NonUniqueResultException
+     * @param $id
+     * @return mixed[] Find by id
+     * @throws DBALException
      */
-    public function findBalance()
+    public function findByAccountId( $id)
     {
+        $sql = "SELECT  account.account_title, l.id, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+                FROM 
+                (SELECT @balance := 0) AS initial, account 
+                CROSS JOIN
+                ledger AS  l    
+                WHERE account.id = $id;  
+          
+            ";
+
+        $em = $this->getEntityManager();
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public function findAllByDoctrine() {
         return $this->createQueryBuilder('l')
-            ->orderBy("l.id", "DESC")
-            ->setMaxResults(1)
+            ->andWhere('l.id IS NOT NULL')
+            ->orderBy('l.id', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult()
+            ;
     }
 }

@@ -12,13 +12,13 @@ const TransactionTable = () => {
         <div className="w-full shadow">
             <div className="overflow-hidden ">
                 <table className="min-w-full bg-white">
-                    <thead className style={{ background: theme.table_header, color: theme.table_header_text }}>
+                    <thead style={{ background: theme.table_header, color: theme.table_header_text }}>
                         <tr>
                             <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Account</th>
                             <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Description</th>
                             <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Debit</th>
-                            <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">Credit</th>
-                            <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">Balance</th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Credit</th>
+                            <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Balance</th>
                         </tr>
                     </thead>
                     <tbody style={{ background: theme.ui, color: theme.syntax }}>
@@ -37,11 +37,7 @@ const TransactionTable = () => {
                 </table>
             </div>
         </div>
-        // <ul key={ledger.id}>
-        //     <li >{ledger.account_title}</li>
-        //     <li>{ledger.debit}</li>
-        //     <li>{ledger.credit}</li>
-        // </ul>
+
     )
 }
 
