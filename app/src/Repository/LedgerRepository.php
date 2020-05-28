@@ -48,14 +48,16 @@ class LedgerRepository extends ServiceEntityRepository
      * @return mixed[] Find by id
      * @throws DBALException
      */
-    public function findByAccountId( $id)
+    public function findByAccountId($id)
     {
-        $sql = "SELECT  account.account_title, l.id, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+        $sql = "SELECT  a.account_title, a.id, account_id, transaction_description, debit, credit, @balance := @balance + credit - debit AS balance 
                 FROM 
-                (SELECT @balance := 0) AS initial, account 
+                (SELECT @balance := 0) AS initial, ledger 
                 CROSS JOIN
-                ledger AS  l    
-                WHERE account.id = $id;  
+                account AS  a    
+                 WHERE ledger.account_id = $id
+                 AND a.id = ledger.account_id
+                  
           
             ";
 
@@ -66,12 +68,12 @@ class LedgerRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
-    public function findAllByDoctrine() {
+    public function findAllByDoctrine()
+    {
         return $this->createQueryBuilder('l')
             ->andWhere('l.id IS NOT NULL')
             ->orderBy('l.id', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 }

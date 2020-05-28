@@ -50,5 +50,4 @@ class LedgerController extends AbstractController
         $ledgerById = $this->ledgerRepository->findByAccountId($id);
         return new  JsonResponse($ledgerById);
     }
-    
 }

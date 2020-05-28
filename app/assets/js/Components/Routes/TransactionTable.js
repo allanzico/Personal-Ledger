@@ -1,12 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import { LedgerContext } from "../../contexts/LedgerContext";
+import axios from 'axios';
 import { ThemeContext } from '../../contexts/ThemeContext';
-
+import { useParams } from 'react-router-dom';
+import { fetchLedgerData, initialState } from '../../Reducers/LedgerReducer';
+const ledgerUrl = '/api/ledger/';
 
 const TransactionTable = () => {
-    const { ledgerData } = useContext(LedgerContext);
+    //const { ledgerData } = useContext(LedgerContext);
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
+    const { id } = useParams();
+    const [ledgerData, dispatch] = useReducer(fetchLedgerData, initialState);
+
+    console.log(ledgerData);
+
+    useEffect(() => {
+        axios.get(ledgerUrl + id)
+            .then(res => {
+                dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
+            })
+            .catch(error => {
+                dispatch({ type: 'FETCH_ERROR' })
+            })
+    }, []);
 
     return (
         <div className="w-full shadow">
