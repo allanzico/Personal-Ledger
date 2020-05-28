@@ -9,7 +9,7 @@ const NavBar = () => {
     const theme = isLightTheme ? light : dark;
 
     return (
-        <div style={{ background: theme.bg, color: theme.syntax }}>
+        <div style={{ background: theme.ui, color: theme.syntax }}>
 
             <div className="container mx-auto px-4">
                 <div className="flex items-center  md:justify-between py-2 ">

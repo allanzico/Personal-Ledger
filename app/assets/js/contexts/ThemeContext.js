@@ -1,24 +1,32 @@
-import React, {createContext, Component} from 'react';
+import React, { createContext, Component } from 'react';
 
-export  const ThemeContext = createContext();
+export const ThemeContext = createContext();
 
-class ThemeContextProvider extends Component{
+class ThemeContextProvider extends Component {
     state = {
         isLightTheme: true,
-        light: {syntax: '#555', ui: '#ddd', bg: '#eee'},
-        dark: {syntax: '#ddd', ui: '#333', bg: '#555'},
+        light: {
+            syntax: '#555', ui: '#edf2f7', bg: '#fdfdfd',
+            button: '#2470a0', button_text: '#f8f8f8',
+            table_header: '#2470a0', table_header_text: '#f8f8f8'
+        },
+        dark: {
+            syntax: '#ddd', ui: '#18242C', bg: '#171F24',
+            button: '#f8f8f8', button_text: '#1a2639',
+            table_header: '#1F3645', table_header_text: '#f8f8f8'
+        },
     }
 
     //Toggle dark mode and light mode
     toggleTheme = () => {
-        this.setState({isLightTheme: !this.state.isLightTheme})
+        this.setState({ isLightTheme: !this.state.isLightTheme })
     }
 
     render() {
-        return(
-        <ThemeContext.Provider value={{...this.state, toggleTheme: this.toggleTheme}}>
-            {this.props.children}
-        </ThemeContext.Provider>
+        return (
+            <ThemeContext.Provider value={{ ...this.state, toggleTheme: this.toggleTheme }}>
+                {this.props.children}
+            </ThemeContext.Provider>
         );
     }
 }
