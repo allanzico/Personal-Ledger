@@ -15,9 +15,9 @@ const MainLayout = () => {
 
         <div className=" w-full flex-grow container mx-auto sm:px-4" style={{ background: theme.bg }}>
             <div className="flex flex-wrap -mx-4" >
-                <div className="w-full lg:mb-0 lg:w-1/4 px-4 flex-col justify-center items-center" >
+                <div className="w-full  lg:mb-0 lg:w-1/4 px-4 flex-col justify-center items-center" >
                     <div className="flex-grow flex flex-col ">
-                        <div className="flex-grow flex px-6 py-6 text-grey-darker items-center -mx-4">
+                        <div className="flex-grow flex px-6 py-6 items-center -mx-4">
                             <SideNav />
                         </div>
                     </div>
@@ -30,8 +30,7 @@ const MainLayout = () => {
                                 <Route path="/dashboard/:id" component={Dashboard} />
                                 <Route path="/account" component={Accounts} />
                             </Switch>
-                            <div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

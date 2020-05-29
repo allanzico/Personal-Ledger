@@ -3,6 +3,7 @@ import '../../../css/main.css';
 import { AccountsContext } from '../../contexts/AccountsContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { Link, useParams } from 'react-router-dom';
+import NoData from '../NoData';
 
 export const Accounts = () => {
 
@@ -10,28 +11,35 @@ export const Accounts = () => {
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
 
-    return (
+    console.log(accounts)
 
-        <div className="flex-grow container mx-auto sm:px-4 sm:pt-6">
-            <div class="flex mb-4 sm:gap-4">
-                <div class="w-1/4 bg-gray-500">
-                    <div className="select-none cursor-pointer flex flex-1 items-center p-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg" style={{ background: theme.ui, color: theme.syntax }}>
-                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
-                        <p class="text-lg text-center text-gray-500">New Tickets</p>
-                    </div>
-                </div>
-            </div>
-            {/* {accounts.accounts.map(account => {
+    return (
+        <div className="flex flex-wrap sm:mt-6 ">
+            {accounts.loading ? 'Loading...' : (accounts.accounts.length == 0 ? <NoData /> : accounts.accounts.map(account => {
                 return (
-                    <div key={account.id}>
-                        <Link to={"/dashboard/" + account.id}>
-                            <li> {account.account_title} </li>
+
+                    <div className="w-full sm:w-1/4 mb-4 px-2" key={account.id} >
+                        <Link to={"/dashboard/" + account.id} style={{ textDecoration: 'none' }}>
+                            <div className="cursor-pointer items-center p-4  h-full shadow-lg" style={{ background: theme.ui, color: theme.syntax }}>
+                                <h3 className="mb-2 text-lg font-semibold items-center">{account.account_title}</h3>
+                                <div>
+                                    <p className="text-sm uppercase tracking-wide">Transactions: {account.total_transactions} </p>
+                                </div>
+                            </div>
                         </Link>
                     </div>
 
+
+
                 );
-            })} */}
+            }))}
         </div>
+
+
+
+
+
+
 
     );
 }

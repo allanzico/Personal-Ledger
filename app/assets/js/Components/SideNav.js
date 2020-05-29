@@ -10,8 +10,8 @@ const SideNav = () => {
     const theme = isLightTheme ? light : dark;
 
     return (
-        <ul className=" w-full flex flex-col justify-center items-center">
-            <li className="w-full flex flex-row mb-2">
+        <div className=" w-full flex flex-col justify-center items-center">
+            <div className="w-full flex flex-row mb-2">
 
                 <div
                     className="select-none cursor-pointer flex flex-1 items-center p-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg" style={{ background: theme.ui, color: theme.syntax }}>
@@ -27,9 +27,8 @@ const SideNav = () => {
                 </div>
 
 
-            </li>
-            <li className="w-full flex flex-row mb-2">
-
+            </div>
+            <div className="w-full flex flex-row mb-2">
                 <div
                     className="select-none cursor-pointer flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg" style={{ background: theme.ui, color: theme.syntax }}>
 
@@ -43,11 +42,8 @@ const SideNav = () => {
                         </div>
                     </Link>
                 </div>
-
-
-
-            </li>
-            <li className="w-full flex flex-row mb-2 hover:bg-gray-200 transition duration-500 ease-in-out transform hover:-translate-y-1">
+            </div>
+            <div className="w-full flex flex-row mb-2 hover:bg-gray-200 transition duration-500 ease-in-out transform hover:-translate-y-1">
                 <button className="select-none cursor-pointer flex flex-1 items-center p-2" style={{ background: theme.button, color: theme.button_text }}>
                     <div className="flex flex-col justify-center items-center mr-2">
                         <svg className="h-6 w-6 fill-current mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd"></path>
@@ -57,8 +53,8 @@ const SideNav = () => {
                         <div className="font-small">Add Transaction</div>
                     </div>
                 </button>
-            </li>
-        </ul>
+            </div>
+        </div>
     );
 }
 

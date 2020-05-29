@@ -15,7 +15,7 @@ export const fetchAccounts = (state, action) => {
             return {
                 loading: false,
                 accounts: [],
-                console: 'Ooops'
+                error: 'Something went wrong'
             }
         default:
             return state
