@@ -28,12 +28,11 @@ class LedgerRepository extends ServiceEntityRepository
 
     public function getAll()
     {
-        $sql = "SELECT  account.account_title, l.id, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+        $sql = "SELECT  a.account_title, a.id, account_id, transaction_description, debit, credit, @balance := @balance + credit - debit AS balance 
                 FROM 
-                (SELECT @balance := 0) AS initial, account 
+                (SELECT @balance := 0) AS initial, ledger 
                 CROSS JOIN
-                ledger AS  l    
-          
+                account AS  a        
             ";
 
         $em = $this->getEntityManager();
@@ -50,14 +49,13 @@ class LedgerRepository extends ServiceEntityRepository
      */
     public function findByAccountId($id)
     {
-        $sql = "SELECT  a.account_title, a.id, account_id, transaction_description, debit, credit, @balance := @balance + credit - debit AS balance 
+        $sql = "SELECT  a.account_title, ledger.id, account_id, transaction_description, debit, credit, @balance := @balance + credit - debit AS balance 
                 FROM 
                 (SELECT @balance := 0) AS initial, ledger 
                 CROSS JOIN
                 account AS  a    
                  WHERE ledger.account_id = $id
-                 AND a.id = ledger.account_id
-                  
+                 AND a.id = ledger.account_id  
           
             ";
 
