@@ -3,6 +3,7 @@ import '../../../css/main.css';
 
 import TransactionTable from './TransactionTable';
 import { useParams } from 'react-router-dom';
+import NoData from '../NoData';
 
 export const Dashboard = () => {
 

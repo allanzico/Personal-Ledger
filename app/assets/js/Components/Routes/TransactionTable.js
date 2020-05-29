@@ -14,8 +14,6 @@ const TransactionTable = () => {
     const { id } = useParams();
     const [ledgerData, dispatch] = useReducer(fetchLedgerData, initialState);
 
-    console.log(ledgerData);
-
     useEffect(() => {
         axios.get(ledgerUrl + id)
             .then(res => {
@@ -54,10 +52,10 @@ const TransactionTable = () => {
                                     <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Balance</th>
                                 </tr>
                             </thead>
-                            <tbody style={{ background: theme.ui, color: theme.syntax }}>
+                            <tbody style={{ background: theme.ui, color: theme.syntax }} >
                                 {ledgerData.ledgerData.map(ledger => {
                                     return (
-                                        <tr key={ledger.id}>
+                                        <tr key={ledger.id} >
                                             <td className="w-1/3 text-left py-3 px-4">{ledger.account_title}</td>
                                             <td className="w-1/3 text-left py-3 px-4">{ledger.transaction_description}</td>
                                             <td className="text-left py-3 px-4">{ledger.debit}</td>
