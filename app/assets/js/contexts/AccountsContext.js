@@ -9,6 +9,9 @@ const accountsUrl = '/api/account';
 const AccountsContextProvider = (props) => {
 
     const [accounts, dispatch] = useReducer(fetchAccounts, initialState)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(5);
+
     useEffect(() => {
         axios.get(accountsUrl)
             .then(res => {
@@ -22,7 +25,7 @@ const AccountsContextProvider = (props) => {
 
 
     return (
-        <AccountsContext.Provider value={{ accounts, dispatch }}>
+        <AccountsContext.Provider value={{ dispatch }}>
             {props.children}
         </AccountsContext.Provider>
     );
