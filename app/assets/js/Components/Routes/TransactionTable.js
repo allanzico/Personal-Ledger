@@ -34,6 +34,9 @@ const TransactionTable = () => {
     const indexOfFirst = indexOfLast - perPage;
     const currentTransaction = ledgerData.ledgerData.slice(indexOfFirst, indexOfLast);
 
+    //Get last element in array
+    const lastElement = ledgerData.ledgerData.slice(-1)[0]
+
     //Paginate
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -45,9 +48,15 @@ const TransactionTable = () => {
                         <h3 className="py-4 font-normal text-lg uppercase font-semibold" style={{ color: theme.syntax }}>
                             <div className="flex ">
                                 {ledgerData.ledgerData[0].account_title}
+
                             </div>
                         </h3>
-
+                    </div>
+                    <div className="flex justify-between mb-2">
+                        <div class="px-4 py-2 text-lg sm:mt-0 " style={{ background: theme.ui, color: theme.syntax }}>
+                            Current Balance:
+                            <span class="badge mb-3 rounded px-2 text-center object-right-top text-sm ml-2" style={{ background: theme.badge_bg, color: theme.badge_syntax }} > {lastElement.balance}</span>
+                        </div>
                     </div>
                     <div className="overflow-hidden shadow ">
                         <table className="table-auto border-collapse table-striped relative w-full ">
