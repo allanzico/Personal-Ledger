@@ -8,13 +8,15 @@ import { fetchAccounts, initialState } from '../../Reducers/accountsReducer';
 import axios from 'axios';
 import NoAccount from '../ErrorMessagesComponents/NoAccount';
 import EditAccount from '../UpdateComponents/EditAccount';
+import ConfirmDelete from '../ErrorMessagesComponents/ConfirmDelete';
 const accountsGetUrl = '/api/account';
 
 export const Accounts = () => {
 
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
-    const [showModal, setShow] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [isFlipped, setIsFlipped] = useState();
     const [accounts, dispatch] = useReducer(fetchAccounts, initialState)
     const [currentPage, setCurrentPage] = useState(1);
@@ -39,20 +41,30 @@ export const Accounts = () => {
     //Paginate
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    //OpenModal
-    const openModal = () => {
-        setShow(true);
+    //Open Edit Modal
+    const openEditModal = () => {
+        setShowEditModal(true);
     }
 
-    //Close Modal
-    const closeModal = () => {
-        setShow(false);
+    //Close Edit Modal
+    const closeEditModal = () => {
+        setShowEditModal(false);
+    }
+    //Open Confirm Modal
+    const openConfirmModal = () => {
+        setShowConfirmModal(true);
+    }
+
+    //Close Confirm Modal
+    const closeConfirmModal = () => {
+        setShowConfirmModal(false);
     }
 
 
     return (
         <div>
-            {showModal && <EditAccount closeModal={closeModal} />}
+            {showEditModal && <EditAccount closeEditModal={closeEditModal} />}
+            {showConfirmModal && <ConfirmDelete closeConfirmModal={closeConfirmModal} />}
             <div className="flex flex-wrap sm:mt-6 ">
 
                 {accounts.loading ? <Loader /> : (currentAccount.length == 0 ? <NoAccount /> : currentAccount.map(account => {
@@ -70,10 +82,10 @@ export const Accounts = () => {
                                 </Link>
                                 <div className="mt-2">
                                     <p>
-                                        <button onClick={openModal} className="edit-button inline-block ml-2 p-1 border " style={{ color: theme.syntax }} >
+                                        <button onClick={openEditModal} className="edit-button inline-block ml-2 p-1 border " style={{ color: theme.syntax }} >
                                             <svg className="h-4 w-4 " fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                         </button>
-                                        <button className="delete-button inline-block ml-2 p-1 border" style={{ color: theme.syntax }} >
+                                        <button onClick={openConfirmModal} className="delete-button inline-block ml-2 p-1 border" style={{ color: theme.syntax }} >
                                             <svg className="h-4 w-4 " fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                         </button>
                                     </p>

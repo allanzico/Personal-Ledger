@@ -31,7 +31,7 @@ class AccountController extends AbstractController
      */
     public function indexAction()
     {
-       return $this->getAllAccounts();
+        return $this->getAllAccounts();
     }
 
     /**
@@ -46,25 +46,36 @@ class AccountController extends AbstractController
         $account = new  Account();
 
         //Set Data
-
-        $account->setAccountTitle($data['account_title'])
-            ->setOpeningBalance($data['opening_balance']);
-
+        $account->setAccountTitle($data['account_title']);
         $this->entityManager->persist($account);
         $this->entityManager->flush();
     }
 
+    /**
+     * @Route("/api/account/delete/{account}", name="delete_account", methods={"DELETE"})
+     * @param Account $account
+     * @return void
+     */
+
+    public function deleteAction(Account $account)
+    {
+
+        if ($account) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($account);
+            $entityManager->flush();
+        }
+    }
+
     //Convert accounts to Json
-    public function getAllAccounts() {
+    public function getAllAccounts()
+    {
         $dbAccounts = $this->accountRepository->findAllByNewest();
         $response = [];
 
-        foreach ($dbAccounts as $dbAccount){
+        foreach ($dbAccounts as $dbAccount) {
             $response[] = $dbAccount->toArray();
         }
-
         return new JsonResponse($response);
     }
-
-
 }

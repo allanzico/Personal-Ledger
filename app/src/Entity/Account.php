@@ -24,12 +24,8 @@ class Account
     private $accountTitle;
 
     /**
-     * @ORM\Column(type="float")
-     */
-    private $openingBalance;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ledger", mappedBy="account")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $ledgers;
 
@@ -51,18 +47,6 @@ class Account
     public function setAccountTitle(string $accountTitle): self
     {
         $this->accountTitle = $accountTitle;
-
-        return $this;
-    }
-
-    public function getOpeningBalance(): ?int
-    {
-        return $this->openingBalance;
-    }
-
-    public function setOpeningBalance(int $openingBalance): self
-    {
-        $this->openingBalance = $openingBalance;
 
         return $this;
     }
@@ -103,7 +87,6 @@ class Account
         return [
             'id' => $this->getId(),
             'account_title' => $this->getAccountTitle(),
-            'opening_balance' => $this->getOpeningBalance(),
             'total_transactions' => count($this->getLedgers())
         ];
     }
