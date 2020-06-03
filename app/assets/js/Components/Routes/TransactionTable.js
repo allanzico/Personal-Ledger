@@ -4,9 +4,9 @@ import axios from 'axios';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { useParams } from 'react-router-dom';
 import { fetchLedgerData, initialState } from '../../Reducers/LedgerReducer';
-import NoData from '../NoData';
+import NoData from '../ErrorMessagesComponents/NoData';
 import Pagination from '../Pagination';
-import Loader from '../Loader';
+import Loader from '../ErrorMessagesComponents/Loader';
 const ledgerGetUrl = '/api/ledger/';
 
 const TransactionTable = () => {

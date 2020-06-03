@@ -1,19 +1,21 @@
 import React, { useContext, useReducer, useState, useEffect } from 'react';
 import '../../../css/main.css';
-import { AccountsContext } from '../../contexts/AccountsContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { Link, useParams } from 'react-router-dom';
-import NoData from '../NoData';
-import Loader from '../Loader';
+import { Link } from 'react-router-dom';
+import Loader from '../ErrorMessagesComponents/Loader';
 import Pagination from '../Pagination';
 import { fetchAccounts, initialState } from '../../Reducers/accountsReducer';
 import axios from 'axios';
+import NoAccount from '../ErrorMessagesComponents/NoAccount';
+import EditAccount from '../UpdateComponents/EditAccount';
 const accountsGetUrl = '/api/account';
 
 export const Accounts = () => {
 
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
+    const [showModal, setShow] = useState(false);
+    const [isFlipped, setIsFlipped] = useState();
     const [accounts, dispatch] = useReducer(fetchAccounts, initialState)
     const [currentPage, setCurrentPage] = useState(1);
     const [perPage] = useState(8);
@@ -37,11 +39,23 @@ export const Accounts = () => {
     //Paginate
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    //OpenModal
+    const openModal = () => {
+        setShow(true);
+    }
+
+    //Close Modal
+    const closeModal = () => {
+        setShow(false);
+    }
+
+
     return (
         <div>
+            {showModal && <EditAccount closeModal={closeModal} />}
             <div className="flex flex-wrap sm:mt-6 ">
 
-                {accounts.loading ? <Loader /> : (currentAccount.length == 0 ? <NoData /> : currentAccount.map(account => {
+                {accounts.loading ? <Loader /> : (currentAccount.length == 0 ? <NoAccount /> : currentAccount.map(account => {
                     return (
 
                         <div className="w-full sm:w-1/4 mb-4 px-2 items-baseline" key={account.id} >
@@ -56,10 +70,10 @@ export const Accounts = () => {
                                 </Link>
                                 <div className="mt-2">
                                     <p>
-                                        <button className="inline-block ml-2 p-1 border " style={{ color: theme.syntax }} >
+                                        <button onClick={openModal} className="edit-button inline-block ml-2 p-1 border " style={{ color: theme.syntax }} >
                                             <svg className="h-4 w-4 " fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                         </button>
-                                        <button className="inline-block ml-2 p-1 border" style={{ color: theme.syntax }} >
+                                        <button className="delete-button inline-block ml-2 p-1 border" style={{ color: theme.syntax }} >
                                             <svg className="h-4 w-4 " fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                         </button>
                                     </p>
@@ -67,35 +81,23 @@ export const Accounts = () => {
                                 </div>
                             </div>
 
-
                         </div>
                     );
+
                 }))}
                 <div class="w-full flex justify-center  items-center" >
                     <Pagination perPage={perPage} totalTransactions={accounts.accounts.length} paginate={paginate} />
                 </div>
             </div>
             <div className="w-full justify-center  items-center">
-
                 <form action="" class="form p-6 my-10 relative" style={{ background: theme.ui, color: theme.syntax }}>
                     <h3 class="text-2xl font-semibold">Add Account</h3>
                     <p class="text-gray-600"> please a new account in order to record transactions</p>
                     <input type="text" placeholder="Account name" class="border p-2 w-full mt-3" />
                     <input type="submit" value="Submit" class="w-full mt-6 font-semibold select-none cursor-pointer flex flex-1 items-center p-2" style={{ background: theme.button, color: theme.button_text }} />
-
                 </form>
-
             </div>
         </div>
-
-
-
-
-
-
-
-
-
     );
 }
 

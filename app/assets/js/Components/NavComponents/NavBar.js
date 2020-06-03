@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import '../../css/main.css';
-import { ThemeContext } from "../contexts/ThemeContext";
-import { AuthContext } from "../contexts/AuthContext";
+import '../../../css/main.css';
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const NavBar = () => {
     // const  {isAuthenticated, toggleAuth} = useContext(AuthContext);

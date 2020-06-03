@@ -4,7 +4,8 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import Dashboard from "./Dashboard";
 import { LedgerContext } from '../../contexts/LedgerContext';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import SideNav from '../SideNav';
+import SideNav from '../NavComponents/SideNav';
+
 import Accounts from './Accounts';
 
 

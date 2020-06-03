@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import '../../css/main.css';
-import { ThemeContext } from "../contexts/ThemeContext";
+import '../../../css/main.css';
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { Link } from 'react-router-dom';
 
 
