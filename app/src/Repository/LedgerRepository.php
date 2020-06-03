@@ -28,13 +28,11 @@ class LedgerRepository extends ServiceEntityRepository
 
     public function getAll()
     {
-        $sql = "SELECT account.account_title, transaction_description, debit, credit, @balance := @balance + l.credit - l.debit AS balance 
+        $sql = "SELECT  a.account_title, a.id, account_id, transaction_description, debit, credit, @balance := @balance + credit - debit AS balance 
                 FROM 
-                (SELECT @balance := 0) AS initial, account 
+                (SELECT @balance := 0) AS initial, ledger 
                 CROSS JOIN
-                ledger AS  l    
-                WHERE account.id = 1  
-          
+                account AS  a        
             ";
 
         $em = $this->getEntityManager();
@@ -45,17 +43,35 @@ class LedgerRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return mixed[] Returns latest balance
-     * @throws NonUniqueResultException
+     * @param $id
+     * @return mixed[] Find by id
+     * @throws DBALException
      */
-    public function findBalance ()
+    public function findByAccountId($id)
     {
-        return $this->createQueryBuilder('l')
-            ->orderBy("l.id", "DESC")
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "SELECT  a.account_title, ledger.id, account_id, transaction_description, debit, credit, @balance := @balance + credit - debit AS balance 
+                FROM 
+                (SELECT @balance := 0) AS initial, ledger 
+                CROSS JOIN
+                account AS  a    
+                 WHERE ledger.account_id = $id
+                 AND a.id = ledger.account_id  
+          
+            ";
+
+        $em = $this->getEntityManager();
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 
+    public function findAllByDoctrine()
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.id IS NOT NULL')
+            ->orderBy('l.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

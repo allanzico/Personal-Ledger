@@ -27,24 +27,27 @@ class LedgerController extends AbstractController
     private $ledgerRepository;
 
     public function __construct(EntityManagerInterface $entityManager, LedgerRepository $ledgerRepository)
-        {
-
-            $this->entityManager = $entityManager;
-            $this->ledgerRepository = $ledgerRepository;
-        }
-
-    /**
-     * @Route("/", name="ledger", methods={"GET"})
-     */
-    public function index()
     {
-        $dbLedgers = $this->ledgerRepository->getAll();
 
-        return $this->render('ledger/index.html.twig',[
-            'ledgers' =>$dbLedgers,
-        ]);
-
+        $this->entityManager = $entityManager;
+        $this->ledgerRepository = $ledgerRepository;
     }
 
+    /**
+     * @Route("/api/ledger", name="ledger", methods={"GET"})
+     */
+    public function indexAction()
+    {
+        $dbLedgers = $this->ledgerRepository->getAll();
+        return new JsonResponse($dbLedgers);
+    }
 
+    /**
+     * @Route("/api/ledger/{id}", name="ledger", methods={"GET"})
+     */
+    public  function  findByAccountId($id)
+    {
+        $ledgerById = $this->ledgerRepository->findByAccountId($id);
+        return new  JsonResponse($ledgerById);
+    }
 }

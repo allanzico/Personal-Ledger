@@ -24,7 +24,7 @@ class CreditController extends AbstractController
     }
 
     /**
-     * @Route("/credit", name="credit")
+     * @Route("/api/credit", name="credit")
      */
     public function index()
     {
@@ -35,12 +35,13 @@ class CreditController extends AbstractController
 
     /**
      * Add an income
-     * @Route("/credit/create", name="credit_create_action")
+     * @Route("/api/credit/create", name="credit_create_action")
      * @param Request $request
      * @return RedirectResponse|Response
      */
 
-    public function createAction(Request $request){
+    public function createAction(Request $request)
+    {
 
         //Create and render debit form
         $form = $this->createForm(CreditFormType::class);
@@ -57,7 +58,9 @@ class CreditController extends AbstractController
             return $this->redirectToRoute('ledger');
         }
 
-        return $this->render('credit/create.html.twig',
-            ['creditForm' =>$form->createView()]);
+        return $this->render(
+            'credit/create.html.twig',
+            ['creditForm' => $form->createView()]
+        );
     }
 }

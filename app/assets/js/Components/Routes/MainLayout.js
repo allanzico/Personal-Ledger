@@ -1,29 +1,42 @@
-import React from 'react';
+import React, { useContext, createContext } from 'react';
 import '../../../css/main.css';
-import {ThemeContext} from "../../contexts/ThemeContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import Dashboard from "./Dashboard";
+import { LedgerContext } from '../../contexts/LedgerContext';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import SideNav from '../SideNav';
+import Accounts from './Accounts';
 
 
-export const MainLayout = () => {
-    return(
+const MainLayout = () => {
+    const { isLightTheme, light, dark } = useContext(ThemeContext);
+    const theme = isLightTheme ? light : dark;
+    return (
 
-        //Consume theme context in functional components
-
-        <ThemeContext.Consumer>{(context)=> {
-            const  {isLightTheme, light, dark} = context;
-            const  theme = isLightTheme ? light : dark;
-            return (
-                <div className="flex mt-4" style={{background:theme.bg, color:theme.syntax}}>
-                    <div className="w-full md:w-1/4  md:mx-8 " style={{background:theme.ui}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-                    </div>
-                    <div className="w-full md:w-3/4 " style={{background:theme.ui}}>
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+        <div className=" w-full flex-grow container mx-auto sm:px-4" style={{ background: theme.bg }}>
+            <div className="flex flex-wrap -mx-4" >
+                <div className="w-full  lg:mb-0 lg:w-1/4 px-4 flex-col justify-center items-center" >
+                    <div className="flex-grow flex flex-col ">
+                        <div className="flex-grow flex px-6 py-6 items-center -mx-4">
+                            <SideNav />
+                        </div>
                     </div>
                 </div>
-            )
-        }}
+                <div className="w-full lg:w-3/4 px-4">
+                    <div className="justify-center items-center">
+                        <div className="mb-4">
+                            <Switch>
+                                <Route path="/dashboard/:id" component={Dashboard} />
+                                <Route path="/account" component={Accounts} />
+                            </Switch>
 
-        </ThemeContext.Consumer>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     );
 }

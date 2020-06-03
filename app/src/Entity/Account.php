@@ -98,11 +98,13 @@ class Account
         return $this;
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return [
-            'id' =>$this->getId(),
-            'account_title' =>$this->getAccountTitle(),
-            'opening_balance' =>$this->getOpeningBalance()
+            'id' => $this->getId(),
+            'account_title' => $this->getAccountTitle(),
+            'opening_balance' => $this->getOpeningBalance(),
+            'total_transactions' => count($this->getLedgers())
         ];
     }
 }

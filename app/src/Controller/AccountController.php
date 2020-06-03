@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Account;
+use App\Repository\AccountRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use function json_decode;
+
+
 
 class AccountController extends AbstractController
 {
@@ -16,29 +18,30 @@ class AccountController extends AbstractController
      * @var EntityManagerInterface
      */
     private $entityManager;
+    private $accountRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, AccountRepository $accountRepository)
     {
         $this->entityManager = $entityManager;
+        $this->accountRepository = $accountRepository;
     }
 
     /**
-     * @Route("/account", name="account")
+     * @Route("/api/account", name="account", methods={"GET"})
      */
-    public function index()
+    public function indexAction()
     {
-        return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
-        ]);
+       return $this->getAllAccounts();
     }
 
     /**
-     * @Route("/account/create", name="account_create_account", methods={"POST"})
+     * @Route("api/account/create", name="account_create_account", methods={"POST"})
      * @param Request $request
-     * @return JsonResponse
+     * @return void
      */
 
-    public function createAction(Request $request){
+    public function createAction(Request $request)
+    {
         $data = json_decode($request->getContent(), true);
         $account = new  Account();
 
@@ -49,8 +52,19 @@ class AccountController extends AbstractController
 
         $this->entityManager->persist($account);
         $this->entityManager->flush();
-
-        return new JsonResponse($data);
     }
+
+    //Convert accounts to Json
+    public function getAllAccounts() {
+        $dbAccounts = $this->accountRepository->findAllByNewest();
+        $response = [];
+
+        foreach ($dbAccounts as $dbAccount){
+            $response[] = $dbAccount->toArray();
+        }
+
+        return new JsonResponse($response);
+    }
+
 
 }

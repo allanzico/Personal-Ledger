@@ -24,7 +24,7 @@ class DebitController extends AbstractController
     }
 
     /**
-     * @Route("/debit", name="debit")
+     * @Route("/api/debit", name="debit")
      */
     public function index()
     {
@@ -35,12 +35,13 @@ class DebitController extends AbstractController
 
     /**
      * Add an expense
-     * @Route("/debit/create", name="debit_create_action")
+     * @Route("/api/debit/create", name="debit_create_action")
      * @param Request $request
      * @return RedirectResponse|Response
      */
 
-    public function createAction(Request $request){
+    public function createAction(Request $request)
+    {
 
         //Create and render debit form
         $form = $this->createForm(DebitTFormType::class);
@@ -57,7 +58,9 @@ class DebitController extends AbstractController
             return $this->redirectToRoute('ledger');
         }
 
-        return $this->render('debit/create.html.twig',
-            ['debitForm' =>$form->createView()]);
+        return $this->render(
+            'debit/create.html.twig',
+            ['debitForm' => $form->createView()]
+        );
     }
 }
