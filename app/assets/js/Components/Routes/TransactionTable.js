@@ -7,7 +7,7 @@ import { fetchLedgerData, initialState } from '../../Reducers/LedgerReducer';
 import NoData from '../NoData';
 import Pagination from '../Pagination';
 import Loader from '../Loader';
-const ledgerUrl = '/api/ledger/';
+const ledgerGetUrl = '/api/ledger/';
 
 const TransactionTable = () => {
     //const { ledgerData } = useContext(LedgerContext);
@@ -19,7 +19,7 @@ const TransactionTable = () => {
     const [perPage] = useState(5);
 
     useEffect(() => {
-        axios.get(ledgerUrl + id)
+        axios.get(ledgerGetUrl + id)
             .then(res => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
             })

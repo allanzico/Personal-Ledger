@@ -26,7 +26,6 @@ const MainLayout = () => {
                     <div className="justify-center items-center">
                         <div className="mb-4">
                             <Switch>
-                                <Route exact path="/" component={Dashboard} />
                                 <Route path="/dashboard/:id" component={Dashboard} />
                                 <Route path="/account" component={Accounts} />
                             </Switch>

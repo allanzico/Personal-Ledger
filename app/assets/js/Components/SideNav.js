@@ -19,7 +19,7 @@ const SideNav = () => {
                         <svg className="h-6 w-6 fill-current mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                         </svg>
                     </div>
-                    <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                    <Link to="/dashboard/" style={{ textDecoration: 'none' }}>
                         <div className="flex-1 pl-1 mr-16">
                             <div className="font-small">Dashboard</div>
                         </div>
@@ -43,7 +43,7 @@ const SideNav = () => {
                     </Link>
                 </div>
             </div>
-            <div className="w-full flex flex-row mb-2 hover:bg-gray-200 transition duration-500 ease-in-out transform hover:-translate-y-1">
+            <div className="w-full flex flex-row mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1">
                 <button className="select-none cursor-pointer flex flex-1 items-center p-2" style={{ background: theme.button, color: theme.button_text }}>
                     <div className="flex flex-col justify-center items-center mr-2">
                         <svg className="h-6 w-6 fill-current mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd"></path>

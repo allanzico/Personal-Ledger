@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import '../../css/main.css';
 import { ThemeContext } from "../contexts/ThemeContext";
+import { Link } from 'react-router-dom';
 
 
 
@@ -18,6 +19,13 @@ const NoData = () => {
                     </div>
                     <p className="text-2xl text-grey-darker font-medium mb-4">No Data!</p>
                     <p className="text-grey max-w-xs mx-auto mb-6">Please select an account with transactions!</p>
+                    <Link to="/account" style={{ textDecoration: 'none' }}>
+                        <button className="select-none cursor-pointer items-center p-2" style={{ background: theme.button, color: theme.button_text }}>
+                            <div className="flex-1 pl-1">
+                                <div className="font-small">Select Account</div>
+                            </div>
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
