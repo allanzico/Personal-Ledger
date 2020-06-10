@@ -12,10 +12,10 @@ const Pagination = ({ perPage, totalTransactions, paginate }) => {
     }
     return (
         <div>
-            <ul class="flex pl-0 list-none my-2 cursor-pointer " style={{ color: theme.syntax, borderColor: theme.ui }}>
+            <ul className="flex pl-0 list-none my-2 cursor-pointer " style={{ color: theme.syntax, borderColor: theme.ui }}>
                 {pageNumbers.map(number => (
                     <a onClick={() => paginate(number)}>
-                        <li class="relative block py-2 px-3 leading-tight border border-r-0" key={number}>
+                        <li className="relative block py-2 px-3 leading-tight border border-r-0" key={number}>
                             {number}
                         </li>
                     </a>

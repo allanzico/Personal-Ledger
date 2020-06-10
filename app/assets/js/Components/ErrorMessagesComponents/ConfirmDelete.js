@@ -1,13 +1,32 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useReducer } from 'react'
 import { node } from 'prop-types';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { accountsReducer } from '../../Reducers/accountsReducer';
+import Axios from 'axios';
+const accountDeleteUrl = '/api/account/delete/';
 
-
-const ConfirmDelete = ({ closeConfirmModal }) => {
+const ConfirmDelete = ({ closeConfirmModal, account }) => {
 
     let modalRef;
     const { isLightTheme, light, dark } = useContext(ThemeContext);
+    const [accounts, dispatch] = useReducer(accountsReducer, [])
     const theme = isLightTheme ? light : dark;
+
+    console.log(account)
+
+
+    //Delete method
+    // useEffect((id) => {
+    //     Axios.delete(accountDeleteUrl + id)
+    //         .then((account) => {
+    //             dispatch({ type: 'DELETE_ACCOUNT', payload: id })
+    //             console.log(account)
+    //         }).catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
+
+    //detect event listener
     useEffect(() => {
         document.addEventListener('click', onClickOutside)
     }, []);

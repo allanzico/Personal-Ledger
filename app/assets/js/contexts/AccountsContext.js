@@ -1,31 +1,32 @@
 import React, { createContext, useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { fetchAccounts, initialState } from '../Reducers/accountsReducer';
+import { accountsReducer, initialState } from '../Reducers/accountsReducer';
 
 
 export const AccountsContext = createContext();
-const accountsUrl = '/api/account';
+
+const accountsPostUrl = '/api/account/create';
 
 const AccountsContextProvider = (props) => {
 
-    const [accounts, dispatch] = useReducer(fetchAccounts, initialState)
-    const [currentPage, setCurrentPage] = useState(1);
-    const [perPage] = useState(5);
+    const [state, dispatch] = useReducer(accountsReducer, initialState);
 
-    useEffect(() => {
-        axios.get(accountsUrl)
-            .then(res => {
-                dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
+    const addAccount =(account)=> {
+        const config = {
+            'Content-Type':'application/json'
+        }
+        axios.post(accountsPostUrl, account, config).then((res)=>{
+            dispatch({
+                type: 'ADD_ACCOUNT',
+                payload:res.data
             })
-            .catch(error => {
-                dispatch({ type: 'FETCH_ERROR' })
-            })
-    }, []);
+         
+        })
+    }
 
-
-
+    
     return (
-        <AccountsContext.Provider value={{ dispatch }}>
+        <AccountsContext.Provider value={{ dispatch, addAccount }}>
             {props.children}
         </AccountsContext.Provider>
     );

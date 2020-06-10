@@ -35,7 +35,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("api/account/create", name="account_create_account", methods={"POST"})
+     * @Route("/api/account/create", name="account_create_account", methods={"POST"})
      * @param Request $request
      * @return void
      */
@@ -44,11 +44,13 @@ class AccountController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $account = new  Account();
-
+        
         //Set Data
         $account->setAccountTitle($data['account_title']);
         $this->entityManager->persist($account);
         $this->entityManager->flush();
+
+        return new JsonResponse($account);
     }
 
     /**

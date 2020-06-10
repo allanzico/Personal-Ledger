@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { node } from 'prop-types';
 import { ThemeContext } from '../../contexts/ThemeContext';
 
-const EditAccount = ({ closeEditModal }) => {
+const EditAccount = ({ closeEditModal, account }) => {
 
     let modalRef;
     const { isLightTheme, light, dark } = useContext(ThemeContext);
@@ -11,6 +11,11 @@ const EditAccount = ({ closeEditModal }) => {
         document.addEventListener('click', onClickOutside)
     }, []);
 
+   
+    const accounttest = (e)=> {
+        e.preventDefault();
+        console.log(account);
+    }
     //Close Modal on outside click
     const onClickOutside = (e) => {
         modalRef && !modalRef.contains(e.target) ? closeEditModal() : null
@@ -28,7 +33,7 @@ const EditAccount = ({ closeEditModal }) => {
                         <p class="text-2xl font-bold">Edit Account!</p>
                     </div>
                     <p>
-                        <input type="text" class="border p-2 w-full mt-3" />
+                        <input type="text" class="border p-2 w-full mt-3" value={account.account_title} />
                     </p>
                     <div className="flex justify-end pt-2">
                         <button onClick={closeEditModal} className="px-4 p-3 mr-2 border" style={{ color: theme.syntax }} > Cancel</button>
