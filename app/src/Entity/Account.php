@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +20,8 @@ class Account
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Account title is required")
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $accountTitle;
 

@@ -9,8 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
-
+use Symfony\Component\Validator\Constraints\IsNull;
+use function is_null;
 
 class AccountController extends AbstractController
 {
@@ -43,13 +43,21 @@ class AccountController extends AbstractController
     public function createAction(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+        $accountTitle = $request->get('account_title');
         $account = new  Account();
         
         //Set Data
-        $account->setAccountTitle($data['account_title']);
+
+        if(!is_null($accountTitle)){
+            $account->setAccountTitle($data['account_title']);
+           
+        }else {
+            return new JsonResponse('Error');
+
+        }
+        
         $this->entityManager->persist($account);
         $this->entityManager->flush();
-
         return new JsonResponse($account);
     }
 

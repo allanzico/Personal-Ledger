@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Account;
+use App\Entity\Ledger;
 use App\Form\DebitTFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,25 +45,19 @@ class DebitController extends AbstractController
 
     public function createAction(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+        $ledger = new Ledger();
+        $credit = $request->get('credit');
 
-        //Create and render debit form
-        $form = $this->createForm(DebitTFormType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $ledger = $form->getData();
-            $credit = $form['credit']->getData();
-            if ($credit == null) {
-                $ledger->setCredit(0);
-            }
+        if($credit == null){
+            $ledger->setCredit(0)
+                ->setDebit($data['debit'])
+                ->setAccount($this->entityManager->find(Account::class, $data['account']))
+                ->setTransactionDescription($data['transaction_description']);
             $this->entityManager->persist($ledger);
             $this->entityManager->flush();
+            return new JsonResponse($data);
+            }
 
-            return $this->redirectToRoute('ledger');
-        }
-
-        return $this->render(
-            'debit/create.html.twig',
-            ['debitForm' => $form->createView()]
-        );
     }
 }

@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import SideNav from '../NavComponents/SideNav';
 
 import Accounts from './Accounts';
+import AddTransaction from './AddTransaction';
 
 
 const MainLayout = () => {
@@ -29,6 +30,7 @@ const MainLayout = () => {
                             <Switch>
                                 <Route path="/dashboard/:id" component={Dashboard} />
                                 <Route path="/account" component={Accounts} />
+                                <Route path="/transaction/create" component={AddTransaction}/>
                             </Switch>
 
                         </div>

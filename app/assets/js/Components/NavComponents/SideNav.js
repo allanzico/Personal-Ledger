@@ -49,9 +49,11 @@ const SideNav = () => {
                         <svg className="h-6 w-6 fill-current mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd"></path>
                         </svg>
                     </div>
+                    <Link to="/transaction/create" style={{ textDecoration: 'none' }}>
                     <div className="flex-1 pl-1 mr-16">
                         <div className="font-small">Add Transaction</div>
                     </div>
+                    </Link>
                 </button>
             </div>
         </div>

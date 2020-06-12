@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,7 +18,8 @@ class Ledger
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Transaction Description is required")
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $transactionDescription;
 
