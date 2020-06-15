@@ -8,9 +8,10 @@ import { AccountsContext } from '../../contexts/AccountsContext';
 const AddCredit = () =>{
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
-    const [startDate, setStartDate] = useState(new Date());
+    const [transactDate, setTransactDate] = useState(new Date());
     const {accounts} = useContext(AccountsContext);
     const [account, setAccount] = useState(Object.values(accounts.accounts)[0].id);
+
 return (
     <div>
          <div className="w-full justify-center  items-center">
@@ -23,7 +24,7 @@ return (
                         />
                 </div>
                 <div class="w-full flex mb-6">
-                    <select class="block w-full  border text-grey-darker p-2">
+                    <select value={account} onChange={e => setAccount(e.target.value)} class="block w-full  border text-grey-darker p-2">
                     {
                         Object.values(accounts.accounts).map(account=>( <option value={account.id} key={account.id}>{account.account_title}</option>))
                     }
@@ -38,8 +39,8 @@ return (
                     <div class="w-3/4">
                     <DatePicker 
                         className="date-picker"
-                        selected={startDate}
-                        onChange={date => setStartDate(date)}
+                        selected={transactDate}
+                        onChange={date => setTransactDate(date)}
                         showYearDropdown
                         yearDropdownItemNumber={5}
                         scrollableYearDropdown

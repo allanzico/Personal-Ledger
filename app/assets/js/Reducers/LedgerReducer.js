@@ -8,12 +8,12 @@ export const ledgerReducer = (state, action) => {
         case 'ADD_DEBIT':
             return {
                 ...state,
-                ledgerData: [action.payload, ...state.accounts]
+                ledgerData: [action.payload, ...state.ledgerData]
             }
         case 'ADD_CREDIT':
             return {
                 ...state,
-                ledgerData: [action.payload, ...state.accounts]
+                ledgerData: [action.payload, ...state.ledgerData]
             }
         case 'FETCH_SUCCESS':
             return {

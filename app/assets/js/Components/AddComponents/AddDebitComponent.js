@@ -17,6 +17,7 @@ const AddDebit = () =>{
     const [account, setAccount] = useState(Object.values(accounts.accounts)[0].id);
     const {register,errors, handleSubmit} = useForm();
 
+
     //Add Debit
     const onSubmit = () => {
         

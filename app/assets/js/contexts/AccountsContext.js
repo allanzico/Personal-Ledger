@@ -10,9 +10,8 @@ const accountsGetUrl = '/api/account';
 
 const AccountsContextProvider = (props) => {
 
-    const [state, dispatch] = useReducer(accountsReducer, initialState);
-    const [accounts, accountFetch] = useReducer(accountsReducer, initialState)
-
+    const [accounts, accountFetch, dispatch] = useReducer(accountsReducer, initialState);
+ 
      //Fetch account
      useEffect(() => {
         axios.get(accountsGetUrl)
