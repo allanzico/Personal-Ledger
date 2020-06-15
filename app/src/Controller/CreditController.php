@@ -54,6 +54,7 @@ class CreditController extends AbstractController
         if($debit == null){
             $ledger->setDebit(0)
                 ->setCredit($data['credit'])
+                ->setDate($data['date'])
                 ->setAccount($this->entityManager->find(Account::class, $data['account']))
                 ->setTransactionDescription($data['transaction_description']);
             $this->entityManager->persist($ledger);

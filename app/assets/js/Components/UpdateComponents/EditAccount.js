@@ -10,11 +10,11 @@ const EditAccount = ({ closeEditModal, account }) => {
     useEffect(() => {
         document.addEventListener('click', onClickOutside)
     }, []);
-
+    console.log(account);
    
     const accounttest = (e)=> {
         e.preventDefault();
-        console.log(account);
+      
     }
     //Close Modal on outside click
     const onClickOutside = (e) => {

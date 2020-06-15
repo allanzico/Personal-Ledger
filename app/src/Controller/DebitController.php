@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+
 use function dd;
 
 class DebitController extends AbstractController
@@ -52,6 +54,7 @@ class DebitController extends AbstractController
         if($credit == null){
             $ledger->setCredit(0)
                 ->setDebit($data['debit'])
+                ->setDate(new  \DateTime($data['date']))
                 ->setAccount($this->entityManager->find(Account::class, $data['account']))
                 ->setTransactionDescription($data['transaction_description']);
             $this->entityManager->persist($ledger);

@@ -39,6 +39,11 @@ class Ledger
      */
     private $account;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,5 +111,17 @@ class Ledger
                'opening_balance' => $this->account->getOpeningBalance()
            ]
        ];
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
 }

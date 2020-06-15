@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\IsNull;
 use function is_null;
+use function strlen;
+use function trim;
 
 class AccountController extends AbstractController
 {
@@ -43,22 +45,16 @@ class AccountController extends AbstractController
     public function createAction(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $accountTitle = $request->get('account_title');
+//        $accountTitle = $request->get('account_title');
         $account = new  Account();
         
         //Set Data
 
-        if(!is_null($accountTitle)){
             $account->setAccountTitle($data['account_title']);
-           
-        }else {
-            return new JsonResponse('Error');
+            $this->entityManager->persist($account);
+            $this->entityManager->flush();
 
-        }
-        
-        $this->entityManager->persist($account);
-        $this->entityManager->flush();
-        return new JsonResponse($account);
+             return new JsonResponse($account);
     }
 
     /**

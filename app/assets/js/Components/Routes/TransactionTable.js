@@ -1,12 +1,11 @@
 import React, { useContext, useReducer, useEffect, useState } from 'react';
-import { LedgerContext } from "../../contexts/LedgerContext";
 import axios from 'axios';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { useParams } from 'react-router-dom';
-import { fetchLedgerData, initialState } from '../../Reducers/LedgerReducer';
 import NoData from '../ErrorMessagesComponents/NoData';
 import Pagination from '../Pagination';
 import Loader from '../ErrorMessagesComponents/Loader';
+import { ledgerReducer, initialState } from '../../Reducers/ledgerReducer';
 const ledgerGetUrl = '/api/ledger/';
 
 const TransactionTable = () => {
@@ -14,7 +13,7 @@ const TransactionTable = () => {
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
     const { id } = useParams();
-    const [ledgerData, dispatch] = useReducer(fetchLedgerData, initialState);
+    const [ledgerData, dispatch] = useReducer(ledgerReducer, initialState);
     const [currentPage, setCurrentPage] = useState(1);
     const [perPage] = useState(5);
 

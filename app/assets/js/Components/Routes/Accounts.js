@@ -11,21 +11,20 @@ import EditAccount from '../UpdateComponents/EditAccount';
 import ConfirmDelete from '../ErrorMessagesComponents/ConfirmDelete';
 import { AccountsContext } from '../../contexts/AccountsContext';
 const accountsGetUrl = '/api/account';
-const accountsPostUrl = '/api/account/create';
+import {useForm} from 'react-hook-form';
 
 export const Accounts = () => {
 
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
     const [showEditModal, setShowEditModal] = useState(false);
-   const  {addAccount} = useContext(AccountsContext);
+    const  {addAccount} = useContext(AccountsContext);
     const [accountTitle, setTitle] = useState('');
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    
     const [accounts, accountFetch] = useReducer(accountsReducer, initialState)
     const [currentPage, setCurrentPage] = useState(1);
     const [perPage] = useState(8);
-
+    const {register,errors, handleSubmit} = useForm();
     //Fetch account
     useEffect(() => {
         axios.get(accountsGetUrl)
@@ -38,16 +37,15 @@ export const Accounts = () => {
     }, []);
 
     //Add account
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = () => {
+        
         const newAccount = {
             account_title: accountTitle
         }
         addAccount(newAccount)
         setTitle('');
        refreshPage();
-       
-        
+   
     }
 
     
@@ -61,8 +59,10 @@ export const Accounts = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     //Open Edit Modal
-    const openEditModal = () => {
+    const openEditModal = (e) => {
+        e.preventDefault();
         setShowEditModal(true);
+        
     }
 
     //Close Edit Modal
@@ -129,13 +129,15 @@ export const Accounts = () => {
             </div>
             <div className="w-full justify-center  items-center">
             
-                <form onSubmit={handleSubmit} action="" class="form p-6 my-10 relative" style={{ background: theme.ui, color: theme.syntax }}>
+                <form onSubmit={handleSubmit(onSubmit)} action="" class="form p-6 my-10 relative" style={{ background: theme.ui, color: theme.syntax }}>
                     <h3 class="text-2xl font-semibold">Add Account</h3>
                     <p class="text-gray-600"> please a new account in order to record transactions</p>
                     <input type="text" placeholder="Account name" class="border p-2 w-full mt-3" 
                          value={accountTitle} onChange={(e)=>setTitle(e.target.value)}
+                         name ="account"
+                         ref={register({required: 'Account name is required'})}
                     />
-                  
+                  {errors.account && <p class="text-red-500 text-s italic" >{errors.account.message}</p>}
                     <input  type="submit" value="Submit" class="w-full mt-6 font-semibold select-none cursor-pointer flex flex-1 items-center p-2" style={{ background: theme.button, color: theme.button_text }} />
                    
                     </form>

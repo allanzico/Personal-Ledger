@@ -3,8 +3,18 @@ export const initialState = {
     error: '',
     ledgerData: []
 }
-export const fetchLedgerData = (state, action) => {
+export const ledgerReducer = (state, action) => {
     switch (action.type) {
+        case 'ADD_DEBIT':
+            return {
+                ...state,
+                ledgerData: [action.payload, ...state.accounts]
+            }
+        case 'ADD_CREDIT':
+            return {
+                ...state,
+                ledgerData: [action.payload, ...state.accounts]
+            }
         case 'FETCH_SUCCESS':
             return {
                 loading: false,
