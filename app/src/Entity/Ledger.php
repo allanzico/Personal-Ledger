@@ -36,11 +36,12 @@ class Ledger
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Account", inversedBy="ledgers")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $account;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $date;
 

@@ -23,7 +23,12 @@ export const accountsReducer = (state, action) => {
                 error: 'Something went wrong'
             }
         case 'DELETE_ACCOUNT':
-            return state.accounts.filter((account) => account.id !== action.payload)
+            return {
+                ...state,
+                accounts: state.accounts.filter(account => {
+                    account.id !== action.payload;
+                })
+            }
         default:
             return state
     }

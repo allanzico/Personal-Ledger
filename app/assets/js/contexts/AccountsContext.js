@@ -6,24 +6,25 @@ import { accountsReducer, initialState } from '../Reducers/accountsReducer';
 export const AccountsContext = createContext();
 
 const accountsPostUrl = '/api/account/create';
+const accountDeleteUrl = '/api/account/delete/';
 const accountsGetUrl = '/api/account';
 
 const AccountsContextProvider = (props) => {
 
-    const [accounts, accountFetch, dispatch] = useReducer(accountsReducer, initialState);
- 
+    const [accounts, dispatch] = useReducer(accountsReducer, initialState);
+
      //Fetch account
      useEffect(() => {
         axios.get(accountsGetUrl)
             .then(res => {
-                accountFetch({ type: 'FETCH_SUCCESS', payload: res.data })
+                dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
             })
             .catch(error => {
-                accountFetch({ type: 'FETCH_ERROR' })
+                dispatch({ type: 'FETCH_ERROR' })
             })
     }, []);
 
-
+  //Add new account
     const addAccount =(account)=> {
         const config = {
             'Content-Type':'application/json'
@@ -37,9 +38,17 @@ const AccountsContextProvider = (props) => {
         })
     }
 
-    
+    //Delete Account
+    const deleteAccount = (id) => {
+        axios.delete(accountDeleteUrl + id);
+        dispatch({
+           type: 'DELETE_ACCOUNT',
+           payload: id
+       })
+    }
+
     return (
-        <AccountsContext.Provider value={{ dispatch, accounts, addAccount }}>
+        <AccountsContext.Provider value={{ accounts, addAccount, deleteAccount, dispatch}}>
             {props.children}
         </AccountsContext.Provider>
     );

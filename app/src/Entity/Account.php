@@ -27,7 +27,6 @@ class Account
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ledger", mappedBy="account")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $ledgers;
 

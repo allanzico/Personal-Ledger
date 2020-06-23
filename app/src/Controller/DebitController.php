@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Account;
 use App\Entity\Ledger;
 use App\Form\DebitTFormType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,6 +44,7 @@ class DebitController extends AbstractController
      * @Route("/api/debit/create", name="debit_create_action")
      * @param Request $request
      * @return RedirectResponse|Response
+     * @throws \Exception
      */
 
     public function createAction(Request $request)
@@ -54,7 +56,7 @@ class DebitController extends AbstractController
         if($credit == null){
             $ledger->setCredit(0)
                 ->setDebit($data['debit'])
-                ->setDate(new  \DateTime($data['date']))
+                ->setDate(new  DateTime($data['date']))
                 ->setAccount($this->entityManager->find(Account::class, $data['account']))
                 ->setTransactionDescription($data['transaction_description']);
             $this->entityManager->persist($ledger);

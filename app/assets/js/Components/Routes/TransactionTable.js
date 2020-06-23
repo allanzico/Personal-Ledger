@@ -6,6 +6,7 @@ import NoData from '../ErrorMessagesComponents/NoData';
 import Pagination from '../Pagination';
 import Loader from '../ErrorMessagesComponents/Loader';
 import { ledgerReducer, initialState } from '../../Reducers/ledgerReducer';
+import { format } from 'date-fns'
 const ledgerGetUrl = '/api/ledger/';
 
 const TransactionTable = () => {
@@ -26,6 +27,8 @@ const TransactionTable = () => {
                 dispatch({ type: 'FETCH_ERROR' })
             })
     }, []);
+
+
 
     //Get current Transaction
 
@@ -62,21 +65,34 @@ const TransactionTable = () => {
                             <thead style={{ background: theme.table_header, color: theme.table_header_text }}>
                                 <tr>
 
+                                    <th className="text-left py-3 px-4 uppercase font-semibold text-sm">Date</th>
                                     <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Description</th>
                                     <th className="text-left py-3 px-4 uppercase font-semibold text-sm ">Debit</th>
                                     <th className="text-left py-3 px-4 uppercase font-semibold text-sm ">Credit</th>
                                     <th className="text-left py-3 px-4 uppercase font-semibold text-sm ">Balance</th>
+                                    <th className="text-left uppercase font-semibold text-sm  ">Manage</th>
                                 </tr>
                             </thead>
                             <tbody style={{ background: theme.ui, color: theme.syntax }} >
                                 {currentTransaction.map(ledger => {
                                     return (
                                         <tr key={ledger.id} >
-
+                                            <td className="text-left py-3 px-4 " style={{ borderBottomColor: theme.bg }} >{ledger.date}</td>
                                             <td className="w-1/3 text-left py-3 px-4 " style={{ borderBottomColor: theme.bg }} >{ledger.transaction_description}</td>
                                             <td className="text-left py-3 px-4 " style={{ borderBottomColor: theme.bg }} >{ledger.debit}</td>
                                             <td className="text-left py-3 px-4 " style={{ borderBottomColor: theme.bg }} >{ledger.credit}</td>
                                             <td className="text-left py-3 px-4 " style={{ borderBottomColor: theme.bg }} >{ledger.balance}</td>
+                                            <td className="text-left " style={{ borderBottomColor: theme.bg }} >
+                                            
+                                                    <button className="edit-button inline-block ml-2 p-1 " style={{ color: theme.syntax }} >
+                                                        <svg className="h-4 w-4 " fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                    </button>
+                                                    <span className="ml-2 uppercase font-semibold text-sm " style={{ color: theme.syntax }}>|</span>
+                                                    <button type="button" className="delete-button inline-block ml-2 p-1 "  style={{ color: theme.syntax}} >
+                                                        <svg className="h-4 w-4 " fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                    </button>
+        
+                                            </td>
                                         </tr>
                                     );
                                 })}

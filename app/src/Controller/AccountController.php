@@ -71,6 +71,8 @@ class AccountController extends AbstractController
             $entityManager->remove($account);
             $entityManager->flush();
         }
+
+        return new JsonResponse('Deleted');
     }
 
     //Convert accounts to Json

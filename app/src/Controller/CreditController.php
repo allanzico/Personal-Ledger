@@ -6,6 +6,7 @@ use App\Entity\Account;
 use App\Entity\Ledger;
 use App\Form\CreditFormType;
 use App\Form\DebitTFormType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,6 +44,7 @@ class CreditController extends AbstractController
      * @Route("/api/credit/create", name="credit_create_action")
      * @param Request $request
      * @return RedirectResponse|Response
+     * @throws \Exception
      */
 
     public function createAction(Request $request)
@@ -54,7 +56,7 @@ class CreditController extends AbstractController
         if($debit == null){
             $ledger->setDebit(0)
                 ->setCredit($data['credit'])
-                ->setDate($data['date'])
+                ->setDate(new DateTime($data['date']))
                 ->setAccount($this->entityManager->find(Account::class, $data['account']))
                 ->setTransactionDescription($data['transaction_description']);
             $this->entityManager->persist($ledger);
