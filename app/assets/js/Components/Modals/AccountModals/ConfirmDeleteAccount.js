@@ -5,11 +5,10 @@ import Axios from 'axios';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 
 
-const ConfirmDeleteAccount = ({closeModal, callback}) => {
+const ConfirmDeleteAccount = ({closeModal, accountDeleteCb}) => {
 
     let modalRef;
     const { isLightTheme, light, dark } = useContext(ThemeContext)
-    const [accounts, dispatch] = useReducer(accountsReducer, [])
     const theme = isLightTheme ? light : dark;
     
     //detect event listener
@@ -38,7 +37,7 @@ const ConfirmDeleteAccount = ({closeModal, callback}) => {
                     </p>
                     <div className="flex justify-end pt-2">
                         <button onClick={closeModal} className="px-4 p-3 mr-2 border" style={{ color: theme.syntax }} > Cancel</button>
-                        <button onClick={callback} className="modal-close px-4 p-3 bg-red-700 text-white" >Delete</button>
+                        <button onClick={accountDeleteCb} className="modal-close px-4 p-3 bg-red-700 text-white" >Delete</button>
                     </div>
 
                 </div>

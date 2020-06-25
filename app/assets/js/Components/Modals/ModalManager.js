@@ -2,10 +2,12 @@ import React, {useContext} from 'react'
 import ConfirmDeleteAccount from './AccountModals/ConfirmDeleteAccount'
 import EditAccount from './AccountModals/EditAccount'
 import { ModalContext } from '../../contexts/ModalContext'
+import ConfirmDeleteTransaction from './TransactionModals/ConfirmDeleteTransaction'
 
 const Modals = {
     ConfirmDeleteAccount,
-    EditAccount
+    EditAccount,
+    ConfirmDeleteTransaction
 }
 const ModalManager = (props) => {
     const {currentModal, setCurrentModal} = useContext(ModalContext);

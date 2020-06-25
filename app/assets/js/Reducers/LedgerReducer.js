@@ -27,6 +27,13 @@ export const ledgerReducer = (state, action) => {
                 ledgerData: [],
                 console: 'Ooops'
             }
+            case 'DELETE_TRANSACTION':
+                return {
+                    ...state,
+                    ledgerData: state.ledgerData.filter(ledger => {
+                        ledger.id !== action.payload;
+                    })
+                }
         default:
             return state
     }

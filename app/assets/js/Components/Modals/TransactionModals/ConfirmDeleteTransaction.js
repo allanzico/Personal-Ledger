@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 
 
-const ConfirmDeleteTransaction = ({closeModal, callback}) => {
+const ConfirmDeleteTransaction = ({closeModal, transactionDeleteCb}) => {
 
     let modalRef;
     const { isLightTheme, light, dark } = useContext(ThemeContext)
@@ -31,14 +31,14 @@ const ConfirmDeleteTransaction = ({closeModal, callback}) => {
 
                 <div className="modal-content py-4 text-left px-6" style={{ background: theme.ui, color: theme.syntax }}>
                     <div class="flex justify-between items-center pb-3">
-                        <p class="text-2xl font-bold">Delete Account!</p>
+                        <p class="text-2xl font-bold">Delete Transaction</p>
                     </div>
                     <p>
                         Are you sure? This action is irreversible
                     </p>
                     <div className="flex justify-end pt-2">
                         <button onClick={closeModal} className="px-4 p-3 mr-2 border" style={{ color: theme.syntax }} > Cancel</button>
-                        <button onClick={callback} className="modal-close px-4 p-3 bg-red-700 text-white" >Delete</button>
+                        <button onClick={transactionDeleteCb} className="modal-close px-4 p-3 bg-red-700 text-white" >Delete</button>
                     </div>
 
                 </div>

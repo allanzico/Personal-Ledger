@@ -52,4 +52,22 @@ class LedgerController extends AbstractController
         return new  JsonResponse($ledgerById);
     }
 
+    /**
+     * @Route("/api/ledger/delete/{ledger}", name="delete_ledger", methods={"DELETE"})
+     * @param Ledger $ledger
+     * @return JsonResponse
+     */
+
+    public function deleteAction(Ledger $ledger)
+    {
+
+        if ($ledger) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($ledger);
+            $entityManager->flush();
+        }
+
+        return new JsonResponse('Deleted');
+    }
+
 }

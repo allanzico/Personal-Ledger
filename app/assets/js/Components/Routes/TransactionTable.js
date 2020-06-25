@@ -7,6 +7,8 @@ import Pagination from '../Pagination';
 import Loader from '../ErrorMessagesComponents/Loader';
 import { ledgerReducer, initialState } from '../../Reducers/ledgerReducer';
 import { format } from 'date-fns'
+import { LedgerContext } from '../../contexts/LedgerContext';
+import { ModalContext } from '../../contexts/ModalContext';
 const ledgerGetUrl = '/api/ledger/';
 
 const TransactionTable = () => {
@@ -14,6 +16,8 @@ const TransactionTable = () => {
     const { isLightTheme, light, dark } = useContext(ThemeContext);
     const theme = isLightTheme ? light : dark;
     const { id } = useParams();
+    const {deleteTransaction} = useContext(LedgerContext);
+    const {setCurrentModal} = useContext(ModalContext)
     const [ledgerData, dispatch] = useReducer(ledgerReducer, initialState);
     const [currentPage, setCurrentPage] = useState(1);
     const [perPage] = useState(5);
@@ -28,8 +32,6 @@ const TransactionTable = () => {
             })
     }, []);
 
-
-
     //Get current Transaction
 
     const indexOfLast = currentPage * perPage;
@@ -41,6 +43,20 @@ const TransactionTable = () => {
 
     //Paginate
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    //Delete Transaction
+    const handleTransactionDelete = (id) => {
+        setCurrentModal({
+            name:'ConfirmDeleteTransaction', 
+            props: {transactionDeleteCb:() => {
+                deleteTransaction(id);
+                setCurrentModal(null);   
+            }
+            }
+        });
+        
+       }
+
 
     return (
         <div>
@@ -88,7 +104,7 @@ const TransactionTable = () => {
                                                         <svg className="h-4 w-4 " fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                     </button>
                                                     <span className="ml-2 uppercase font-semibold text-sm " style={{ color: theme.syntax }}>|</span>
-                                                    <button type="button" className="delete-button inline-block ml-2 p-1 "  style={{ color: theme.syntax}} >
+                                                    <button onClick={() => handleTransactionDelete(ledger.id)} type="button" className="delete-button inline-block ml-2 p-1 "  style={{ color: theme.syntax}} >
                                                         <svg className="h-4 w-4 " fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                                     </button>
         

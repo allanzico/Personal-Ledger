@@ -3,7 +3,7 @@ import axios from 'axios';
 import { accountsReducer, initialState } from '../Reducers/accountsReducer';
 
 
-export const AccountsContext = createContext();
+export const AccountsContext = createContext(initialState);
 
 const accountsPostUrl = '/api/account/create';
 const accountDeleteUrl = '/api/account/delete/';
@@ -11,7 +11,7 @@ const accountsGetUrl = '/api/account';
 
 const AccountsContextProvider = (props) => {
 
-    const [accounts, dispatch] = useReducer(accountsReducer, initialState);
+    const [state, dispatch] = useReducer(accountsReducer, initialState);
 
      //Fetch account
      useEffect(() => {
@@ -23,6 +23,7 @@ const AccountsContextProvider = (props) => {
                 dispatch({ type: 'FETCH_ERROR' })
             })
     }, []);
+    
 
   //Add new account
     const addAccount =(account)=> {
@@ -48,7 +49,7 @@ const AccountsContextProvider = (props) => {
     }
 
     return (
-        <AccountsContext.Provider value={{ accounts, addAccount, deleteAccount, dispatch}}>
+        <AccountsContext.Provider value={{ accounts: state.accounts, addAccount, deleteAccount, dispatch}}>
             {props.children}
         </AccountsContext.Provider>
     );

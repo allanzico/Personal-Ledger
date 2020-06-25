@@ -4,12 +4,13 @@ import { ledgerReducer, initialState} from '../Reducers/ledgerReducer';
 
 const debitPostUrl = '/api/debit/create';
 const creditPostUrl = '/api/credit/create';
+const transactionDeleteUrl = '/api/ledger/delete/';
 
 
 export const LedgerContext = createContext();
 const LedgerContextProvider = (props) => {
     
-    const [state, debitAdd, creditAdd] = useReducer(ledgerReducer, initialState)
+    const [state, dispatch] = useReducer(ledgerReducer, initialState)
 
     //Add Debit
 const addDebit =(debit)=> {
@@ -17,7 +18,7 @@ const addDebit =(debit)=> {
         'Content-Type':'application/json'
     }
     axios.post(debitPostUrl, debit, config).then((res)=>{
-        debitAdd({
+        dispatch({
             type: 'ADD_DEBIT',
             payload:res.data
         })
@@ -31,7 +32,7 @@ const addCredit =(credit)=> {
         'Content-Type':'application/json'
     }
     axios.post(creditPostUrl, credit, config).then((res)=>{
-        debitAdd({
+        dispatch({
             type: 'ADD_CREDIT',
             payload:res.data
         })
@@ -39,8 +40,17 @@ const addCredit =(credit)=> {
     })
 }
 
+//Delete ledger
+const deleteTransaction = (id) => {
+    axios.delete(transactionDeleteUrl + id);
+    dispatch({
+       type: 'DELETE_TRANSACTION',
+       payload: id
+   })
+}
+
     return (
-        <LedgerContext.Provider value={{ debitAdd, creditAdd, addCredit, addDebit }} >
+        <LedgerContext.Provider value={{ dispatch, addCredit, addDebit, deleteTransaction }} >
             {props.children}
         </LedgerContext.Provider>
     );
